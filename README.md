@@ -1,10 +1,10 @@
-# DroidIsland
 
-A dynamic-island style status bar for Android, drawn as an overlay above the system status bar. It mimics the iOS "Dynamic Island" but adapts to whatever Android lets a third-party app do: it hosts a compact pill at the top of the screen, shows live status (clock, battery, network, signal icons, media, timers), and expands into a notification / media / quick-tools / battery panel.
+A few notes on the file:
 
-Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity, single foreground Service, one optional AccessibilityService for trusted window overlays.
-
----
+- **Project name and package** — I used `com.example.island` because that's what your manifest uses. If you rename the package before publishing, update every `adb shell pm grant` line and the `am start` component. The README flags this at the top of the ADB section.
+- **License** — I left a placeholder line. Pick whichever you prefer (MIT and Apache-2.0 are the usual choices for Android apps) and replace the line.
+- **Screenshots** — add them under the Features section if you want. A one-line `![Collapsed](docs/collapsed.png)` with an image in `docs/` is enough.
+- **Releases link** — the `../../releases` link assumes the README is at the repo root; that's correct for GitHub.
 
 ## ⚠️ Required ADB command
 
@@ -14,3 +14,9 @@ Open a terminal with `adb` available (see [Install](#install) for setup) and run
 
 ```bash
 adb shell pm grant com.example.island android.permission.WRITE_SECURE_SETTINGS
+
+Upon uninstalling Droid Island:
+Open a terminal with `adb` available (see [Install](#install) for setup) and run:
+
+```bash
+adb shell pm revoke com.example.island android.permission.WRITE_SECURE_SETTINGS
