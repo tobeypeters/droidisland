@@ -75,19 +75,104 @@ If a release `.apk` is published:
 3. Tap install.
 4. Launch **DroidIsland**. The setup screen shows every required permission with a status badge and a **Grant** button. Grant them all, then tap **Start island**.
 
-### Windows (ADB install)
+### Installing ADB
 
-1. Download and install [Android Platform Tools](https://developer.android.com/tools/releases/platform-tools) (the ZIP contains `adb.exe`).
-2. Enable **Developer options** on the phone:
-   - Settings → About phone → tap **Build number** seven times.
-3. Enable **USB debugging**:
-   - Settings → System → Developer options → **USB debugging** → On.
-4. Plug the phone into the PC with a USB data cable.
-5. On the phone, accept the **Allow USB debugging?** prompt. Check "Always allow from this computer".
-6. Open a Command Prompt or PowerShell in the platform-tools folder:
+ADB (Android Debug Bridge) is needed to install the APK from a computer and, more importantly, to grant the [required `WRITE_SECURE_SETTINGS` permission](#️-required-adb-command). Pick your operating system below.
+
+#### Windows
+
+1. Download the **SDK Platform-Tools for Windows** ZIP from the [official download page](https://developer.android.com/tools/releases/platform-tools).
+2. Extract the ZIP, for example to `C:\platform-tools`. The folder contains `adb.exe`.
+3. *(Optional but recommended)* Add the folder to your `PATH` so you can run `adb` from anywhere:
+   - Press **Win**, search for **Edit the system environment variables**, and open it.
+   - Click **Environment Variables…**, select **Path** under *User variables*, and click **Edit**.
+   - Click **New**, enter `C:\platform-tools`, and confirm with **OK**.
+   - Close and reopen any Command Prompt / PowerShell windows.
+4. Verify the install:
    ```powershell
-   cd "%LOCALAPPDATA%\Android\Sdk\platform-tools"
+   adb version
    ```
+   If you skipped step 3, open PowerShell in the extracted folder and run `.\adb version` instead.
+
+> **Tip:** If you have Android Studio installed, `adb.exe` is already at `%LOCALAPPDATA%\Android\Sdk\platform-tools` (PowerShell: `$env:LOCALAPPDATA\Android\Sdk\platform-tools`).
+
+#### Linux
+
+**Option A: package manager (easiest)**
+
+```bash
+# Debian / Ubuntu / Linux Mint
+sudo apt update && sudo apt install adb
+
+# Fedora
+sudo dnf install android-tools
+
+# Arch / Manjaro
+sudo pacman -S android-tools
+
+# openSUSE
+sudo zypper install android-tools
+```
+
+**Option B: official Platform-Tools ZIP (always the latest version)**
+
+```bash
+cd ~
+wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+unzip platform-tools-latest-linux.zip
+echo 'export PATH="$HOME/platform-tools:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+If you use zsh, replace `~/.bashrc` with `~/.zshrc`.
+
+Verify the install:
+
+```bash
+adb version
+```
+
+### Preparing the phone for ADB
+
+1. Enable **Developer options**: Settings → About phone → tap **Build number** seven times.
+2. Enable **USB debugging**: Settings → System → Developer options → **USB debugging** → On.
+3. Plug the phone into the computer with a USB **data** cable (some cables are charge-only).
+4. On the phone, accept the **Allow USB debugging?** prompt and check **Always allow from this computer**.
+5. Confirm the phone is detected:
+   ```bash
+   adb devices
+   ```
+   The phone should be listed with the status `device`. If it says `unauthorized`, re-check the prompt on the phone. If the list is empty, try another cable or USB port.
+
+### Installing the APK with ADB
+
+Windows (PowerShell / Command Prompt) and Linux use the same command. Replace the path with the location of your APK:
+
+```bash
+adb install droidisland.apk
+```
+
+To update an existing installation and keep its settings, add `-r`:
+
+```bash
+adb install -r droidisland.apk
+```
+
+Then launch **DroidIsland** on the phone and continue with the setup screen. Don't forget the [required ADB command](#️-required-adb-command) below.
+
+### Troubleshooting ADB
+
+| Problem | Fix |
+|---|---|
+| `adb: command not found` / `'adb' is not recognized` | The Platform-Tools folder is not on your `PATH`. Add it (see above) or run the binary by its full path. |
+| `adb devices` shows nothing (Windows) | Install your phone manufacturer's USB driver, or the [Google USB driver](https://developer.android.com/studio/run/win-usb). |
+| `no permissions` or `insufficient permissions` (Linux) | Your user lacks USB access. Install udev rules (`sudo apt install android-sdk-platform-tools-common` on Debian/Ubuntu) and replug the phone. Or run `adb kill-server && sudo adb start-server` as a quick test. |
+| Device shows as `unauthorized` | Unlock the phone and accept the **Allow USB debugging?** prompt. If it doesn't appear, revoke USB debugging authorizations in Developer options and reconnect. |
+| Device shows as `offline` | Run `adb kill-server`, unplug and replug the cable, then run `adb devices` again. |
+| `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | The installed copy was signed with a different key. Uninstall it first, then install again. |
+
+---
+
 - **Screenshots**
 <br><img src="docs/ui1.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui2.png" alt="UI" width="15%" height="15%" />
 
