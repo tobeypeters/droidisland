@@ -10,11 +10,15 @@ A few notes on the file:
 
 DroidIsland needs one permission that Android does not allow normal apps to grant themselves: **`WRITE_SECURE_SETTINGS`**. This is required for the "Hide system icons" feature, which is the whole point of the app — replacing the real status bar with the island.
 
+After install:
 Open a terminal with `adb` available (see [Install](#install) for setup) and run:
 
 ```bash
 adb shell pm grant com.example.island android.permission.WRITE_SECURE_SETTINGS
 ```
+
+After Uninstall:
+Open a terminal with `adb` available (see [Install](#install) for setup) and run:
 
 ```bash
 adb shell pm revoke com.example.island android.permission.WRITE_SECURE_SETTINGS
