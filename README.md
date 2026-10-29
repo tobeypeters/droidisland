@@ -36,6 +36,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
 - **Hidden on the lock screen**
 - **"Hide system icons" integration** via `icon_blacklist`, so the real status bar's clock, battery, and signal icons don't duplicate the island's
 - **Auto-start on boot** (optional)
+- **Transparent background over apps** — optional. When enabled, the pill's background goes fully transparent while the island is drawn over another app. When the island is over the home screen, the lock screen, or the bar cover is on, it draws with its solid background as usual.
 
 ---
 
