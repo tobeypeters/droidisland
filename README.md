@@ -89,7 +89,7 @@ If a release `.apk` is published:
    cd "%LOCALAPPDATA%\Android\Sdk\platform-tools"
    ```
 - **Screenshots**
-![](docs/ui1.png)
+<img src="(docs/ui1.png" alt="drawing" width="25%" height="25%" />
 
 ## ⚠️ Required ADB command
 
