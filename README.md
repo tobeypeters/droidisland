@@ -14,9 +14,8 @@ Open a terminal with `adb` available (see [Install](#install) for setup) and run
 
 ```bash
 adb shell pm grant com.example.island android.permission.WRITE_SECURE_SETTINGS
-
-Upon uninstalling Droid Island:
-Open a terminal with `adb` available (see [Install](#install) for setup) and run:
+```
 
 ```bash
 adb shell pm revoke com.example.island android.permission.WRITE_SECURE_SETTINGS
+```
