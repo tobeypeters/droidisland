@@ -88,7 +88,8 @@ If a release `.apk` is published:
    ```powershell
    cd "%LOCALAPPDATA%\Android\Sdk\platform-tools"
    ```
-- **Screenshots** — add them under the Features section if you want. A one-line `![Collapsed](docs/collapsed.png)` with an image in `docs/` is enough.
+- **Screenshots**
+[Collapsed](docs/ui1.png)
 
 ## ⚠️ Required ADB command
 
