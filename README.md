@@ -54,9 +54,10 @@ The settings app is organised in cards:
   - **Low battery alert** (opens the battery page at 20%) and **Full charge alert** (tracks the state at 100%, no pop-up)
   - **Hide in landscape**
   - **Transparent over apps**: while an app is in front, the island background goes fully transparent. If the status bar cover is on, it is lifted while an app is in front so the transparency shows, and comes back on the home screen, lock screen and system UI. Needs Usage access.
+  - **Text color over apps**: **Auto**, **Light** or **Dark** text for the transparent island. Auto measures the screen under the island through the accessibility service (Android 11 and newer, see the note under Requirements), so white text never lands on a white page. If it can't measure, Auto follows the system light/dark theme.
   - **Choose apps to show**: filter which apps appear in the island
   - **Stop pop-ups for an app**: pick an app and its own notification settings open, so you can turn off its system pop-up
-  - **System heads-up pop-ups**: a global on/off switch for the system banner, shown only once `WRITE_SECURE_SETTINGS` is granted
+  - **System heads-up pop-ups**: a global on/off switch for the system banner, shown only once `WRITE_SECURE_SETTINGS` is granted. If you turn them off, they are only off while the island is running and visible. They come back when the island stops, is hidden, or after a reboot where it doesn't start, and go off again when the island restarts.
   - **Send test notification**
 - **Hide system icons**:
   - **Hide system icons** via `icon_blacklist`, so the real status bar's icons don't duplicate the island's, with **Also hide system clock** and **Also hide system battery**
@@ -83,6 +84,8 @@ The settings app is organised in cards:
 | **Fine location** (`ACCESS_FINE_LOCATION`) | Required on Android 10+ for `WifiManager.connectionInfo.rssi` to be non-redacted |
 | **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`) and the in-app global heads-up switch (`heads_up_notifications_enabled`). Must be granted via ADB |
 | **Usage access** | Optional. Needed only for the "Hide in apps" and "Transparent over apps" features (they need to know which app is in front) |
+
+**Auto text color over apps** reads the screen under the island using the accessibility service's screenshot ability, which needs Android 11 or newer. If you build from source, make sure the accessibility service config in `res/xml` has `android:canTakeScreenshot="true"`, then turn the service off and on again in Accessibility settings. Without it, the Auto option falls back to the system light/dark theme, and you can still pick Light or Dark by hand.
 
 ---
 
@@ -238,6 +241,8 @@ Open DroidIsland, go to **Features**, and tap **Stop pop-ups for an app**. Pick 
 
 Once the [required ADB command](#️-required-adb-command) has been run, a **System heads-up pop-ups** switch appears in the **Features** card. It turns the system pop-up banner off or on for every app.
 
+The banner is only off while DroidIsland is running and visible. When you stop the island, hide it (Hide in apps, lock screen), or the phone reboots without starting it, the banner is switched back on, and it goes off again when the island comes back. If pop-ups were already off the first time DroidIsland sees the permission, it treats that as your choice and manages them the same way.
+
 ### 3. The nuclear option: turn off all pop-up notifications globally with ADB
 
 This works without granting DroidIsland anything. With the phone connected and `adb` available, run:
@@ -251,5 +256,6 @@ To get pop-ups back:
 Notes:
 
 - This affects every app on the phone, not only DroidIsland.
+- If you use the nuclear option and also grant `WRITE_SECURE_SETTINGS`, DroidIsland adopts the "off" state the first time it runs and from then on re-enables pop-ups whenever it stops. To keep them off permanently, run the ADB command again after stopping the island.
 - Notifications still arrive in the shade and on the island. Only the system pop-up banner is suppressed.
 - Some phone makers ignore this setting, in the same way some ignore `icon_blacklist`.
