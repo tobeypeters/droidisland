@@ -53,8 +53,7 @@ The settings app is organised in cards:
   - **Haptic feedback**: a tiny vibration when the island opens
   - **Low battery alert** (opens the battery page at 20%) and **Full charge alert** (tracks the state at 100%, no pop-up)
   - **Hide in landscape**
-  - **Transparent over apps**: while an app is in front, the island background goes fully transparent. If the status bar cover is on, it is lifted while an app is in front so the transparency shows, and comes back on the home screen, lock screen and system UI. Needs Usage access.
-  - **Text color over apps**: **Auto**, **Light** or **Dark** text for the transparent island. Auto measures the screen under the island through the accessibility service (Android 11 and newer, see the note under Requirements), so white text never lands on a white page. If it can't measure, Auto follows the system light/dark theme.
+  - **Transparent over apps**: while an app is in front, the island background goes fully transparent. If the status bar cover is on, it is lifted while an app is in front so the transparency shows, and comes back on the home screen, lock screen and system UI. Needs Usage access. The island only goes transparent once it can measure the screen behind the pill (see the note under Requirements). It then switches between light and dark text automatically, with a soft halo, so text is never white on white. Until the measurement works, the island stays solid so it is always readable. The Setup card shows whether the measurement is working.
   - **Choose apps to show**: filter which apps appear in the island
   - **Stop pop-ups for an app**: pick an app and its own notification settings open, so you can turn off its system pop-up
   - **System heads-up pop-ups**: a global on/off switch for the system banner, shown only once `WRITE_SECURE_SETTINGS` is granted. If you turn them off, they are only off while the island is running and visible. They come back when the island stops, is hidden, or after a reboot where it doesn't start, and go off again when the island restarts.
@@ -85,7 +84,7 @@ The settings app is organised in cards:
 | **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`) and the in-app global heads-up switch (`heads_up_notifications_enabled`). Must be granted via ADB |
 | **Usage access** | Optional. Needed only for the "Hide in apps" and "Transparent over apps" features (they need to know which app is in front) |
 
-**Auto text color over apps** reads the screen under the island using the accessibility service's screenshot ability, which needs Android 11 or newer. If you build from source, make sure the accessibility service config in `res/xml` has `android:canTakeScreenshot="true"`, then turn the service off and on again in Accessibility settings. Without it, the Auto option falls back to the system light/dark theme, and you can still pick Light or Dark by hand.
+**Automatic text color over apps** reads the screen behind the island using the accessibility service's screenshot ability, which needs Android 11 or newer. If you build from source, make sure the accessibility service config in `res/xml` has `android:canTakeScreenshot="true"`, then turn the service off and on again in Accessibility settings. The Setup card shows "Auto text color over apps" with the current status. Until a measurement works, "Transparent over apps" keeps the island solid instead of transparent.
 
 ---
 
