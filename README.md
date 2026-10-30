@@ -8,7 +8,9 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
 
 ## Features
 
-- **Collapsed pill** in the status bar strip, above the system bar, that shows:
+### The island
+
+- **Collapsed pill** in the status bar strip, above the system bar, that shows (each item can be switched off, see *Island items*):
   - Clock and date (configurable format)
   - Battery percentage and a dynamically-drawn battery icon
   - Wi-Fi signal-level icon (0 to 4 arcs) when connected to Wi-Fi
@@ -17,28 +19,53 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Live network down-speed
   - Notification icons for pending notifications
 - **Expanded island** with multiple pages:
-  - **Notifications** — app name, title, body, plus **Mute** and **Dismiss** buttons
-  - **Media** — album art, title, artist, and play/pause/skip controls
-  - **Timer** — stopwatch with start/pause/reset
-  - **Quick tools** — flashlight, internet panel, Bluetooth settings, DroidIsland settings
-  - **Battery** — percentage, charging state
+  - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
+  - **Media**: album art, title, artist, and play/pause/skip controls
+  - **Timer**: stopwatch with start/pause/reset
+  - **Quick tools**: flashlight, internet panel, Bluetooth settings, DroidIsland settings
+  - **Battery**: percentage, charging state
 - **Gestures**
-  - Tap the pill to expand
+  - Tap the pill, or swipe down on it, to expand
   - Swipe left/right to change page
   - Swipe up to collapse or dismiss a notification
   - Tap a notification to open its app
   - Long-press a notification to mute that app
   - Long-press the pill to open the settings app
-- **Optional full-width "bar cover"** drawn behind the pill to hide HUD chips (screen recording, USB connection, drag targets) from the top strip
-- **Raised-button bevel** around the pill (drawn only when the bar cover is off)
-- **Nine preset colors, black/white/grey, and three colors sampled from the current wallpaper**
-- **"Hide in apps" list** to make the island disappear when a chosen app is in front
 - **Hidden on the lock screen**
-- **"Hide system icons" integration** via `icon_blacklist`, so the real status bar's clock, battery, and signal icons don't duplicate the island's
-- **Auto-start on boot** (optional)
-- **"Stop pop-ups for an app" picker** — choose an app from a list of your launcher apps and DroidIsland opens that app's own notification settings, where you can turn off its system pop-up (heads-up) alerts. No package names to look up
-- **Global heads-up switch** — a one-tap on/off switch for the system pop-up banner of every app. Only shown once `WRITE_SECURE_SETTINGS` is granted
-- **Transparent background over apps** — optional. When enabled, the pill's background goes fully transparent while the island is drawn over another app. When the island is over the home screen, the lock screen, or the bar cover is on, it draws with its solid background as usual.
+
+### Settings
+
+The settings app is organised in cards:
+
+- **Setup**: permission status with a **Grant** button for each (draw over apps, notification access, accessibility service, phone state), plus **Start island**, **Stop island** and **Restart island**.
+- **Start & reliability**: **Start on boot**, and **Run in background** (asks Android to stop pausing the island).
+- **Position & padding**: alignment (left, center, right), horizontal offset, up/down offset, left padding (after the camera) and right padding, with **Reset position & padding**.
+- **Appearance**:
+  - Nine preset colors, a **Basics** row (black, white, grey) and three colors sampled from the current wallpaper (recalculated on startup and when the wallpaper changes)
+  - A **Current** row showing the color applied to the island
+  - **Glass** (see-through island) with an adjustable transparency, plus **Text size** and **Corner roundness**
+- **Island items**: individual on/off switches for clock, battery, date, notification icons, network speed, Wi-Fi, mobile data, Bluetooth, airplane mode, Do Not Disturb, silent/vibrate, next alarm, location, VPN and battery saver. **Clock format** (system, 12-hour, 24-hour) and **Date format** (`Mon 26 Oct`, `26 Oct`, `10/26`) are here too.
+- **Features**:
+  - **Media controls**, **Stopwatch timer** and **Quick tools page**: turn each page on or off
+  - **Notification pop-ups**: expand the island when a notification arrives, with **Pop-up time** and **Auto-close time** sliders
+  - **Respect Do Not Disturb**: no pop-ups while Do Not Disturb is on
+  - **Hide notification text**: pop-ups show only the app name
+  - **Haptic feedback**: a tiny vibration when the island opens
+  - **Low battery alert** (opens the battery page at 20%) and **Full charge alert** (tracks the state at 100%, no pop-up)
+  - **Hide in landscape**
+  - **Transparent over apps**: while an app is in front, the island background goes fully transparent. If the status bar cover is on, it is lifted while an app is in front so the transparency shows, and comes back on the home screen, lock screen and system UI. Needs Usage access.
+  - **Choose apps to show**: filter which apps appear in the island
+  - **Stop pop-ups for an app**: pick an app and its own notification settings open, so you can turn off its system pop-up
+  - **System heads-up pop-ups**: a global on/off switch for the system banner, shown only once `WRITE_SECURE_SETTINGS` is granted
+  - **Send test notification**
+- **Hide system icons**:
+  - **Hide system icons** via `icon_blacklist`, so the real status bar's icons don't duplicate the island's, with **Also hide system clock** and **Also hide system battery**
+  - **Copy command** (the ADB grant command) and **Restore system icons now**
+  - **Cover the status bar**: an optional full-width bar drawn behind the pill to hide HUD chips (screen recording, USB connection, drag targets) from the top strip. The pull-down still works. The raised-button bevel around the pill is drawn only when the cover is off.
+  - **Cover color**: **Island color** makes the cover match the island. **Wallpaper** uses the average color of the wallpaper strip the cover sits on. This is an approximation: it assumes a center-cropped portrait wallpaper and ignores launcher scrolling and custom crops. If the wallpaper image can't be read (live wallpapers, or no read access on some Android versions), it falls back to the wallpaper's primary color.
+- **Hide in apps**: hide the island while chosen apps are in front, for example games or video players. Needs Usage access.
+- **Backup & reset**: **Copy settings** to the clipboard as JSON, **Paste settings** to restore them, and **Reset all settings**.
+- **Gestures**: a cheat sheet of the gestures above.
 
 ---
 
@@ -55,7 +82,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
 | **Phone state** (`READ_PHONE_STATE`) | Required to read `dataNetworkType` for the `5G`/`LTE`/`3G`/`2G` label |
 | **Fine location** (`ACCESS_FINE_LOCATION`) | Required on Android 10+ for `WifiManager.connectionInfo.rssi` to be non-redacted |
 | **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`) and the in-app global heads-up switch (`heads_up_notifications_enabled`). Must be granted via ADB |
-| **Usage access** | Optional. Needed only for the "Hide in apps" feature |
+| **Usage access** | Optional. Needed only for the "Hide in apps" and "Transparent over apps" features (they need to know which app is in front) |
 
 ---
 
