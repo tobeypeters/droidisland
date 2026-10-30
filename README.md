@@ -36,6 +36,8 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
 - **Hidden on the lock screen**
 - **"Hide system icons" integration** via `icon_blacklist`, so the real status bar's clock, battery, and signal icons don't duplicate the island's
 - **Auto-start on boot** (optional)
+- **"Stop pop-ups for an app" picker** — choose an app from a list of your launcher apps and DroidIsland opens that app's own notification settings, where you can turn off its system pop-up (heads-up) alerts. No package names to look up
+- **Global heads-up switch** — a one-tap on/off switch for the system pop-up banner of every app. Only shown once `WRITE_SECURE_SETTINGS` is granted
 - **Transparent background over apps** — optional. When enabled, the pill's background goes fully transparent while the island is drawn over another app. When the island is over the home screen, the lock screen, or the bar cover is on, it draws with its solid background as usual.
 
 ---
@@ -52,7 +54,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
 | **Accessibility service** | Required for `TYPE_ACCESSIBILITY_OVERLAY` windows, which are the only overlays the Android 12+ untrusted-touch filter allows to receive reliable touches |
 | **Phone state** (`READ_PHONE_STATE`) | Required to read `dataNetworkType` for the `5G`/`LTE`/`3G`/`2G` label |
 | **Fine location** (`ACCESS_FINE_LOCATION`) | Required on Android 10+ for `WifiManager.connectionInfo.rssi` to be non-redacted |
-| **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`). Must be granted via ADB |
+| **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`) and the in-app global heads-up switch (`heads_up_notifications_enabled`). Must be granted via ADB |
 | **Usage access** | Optional. Needed only for the "Hide in apps" feature |
 
 ---
@@ -194,3 +196,33 @@ Open a terminal with `adb` available (see [Install](#install) for setup) and run
 ```bash
 adb shell pm revoke com.example.island android.permission.WRITE_SECURE_SETTINGS
 ```
+
+---
+
+## Silencing system pop-ups
+
+DroidIsland shows its own pop-ups, but Android's normal heads-up banners still drop down over the island. There are three ways to stop them, from gentlest to strongest.
+
+### 1. Per app (no ADB needed)
+
+Open DroidIsland, go to **Features**, and tap **Stop pop-ups for an app**. Pick an app and its notification settings open. Turn off the pop-up (heads-up / "pop on screen") option for that app or for the channel you care about.
+
+### 2. Global switch in the app (needs `WRITE_SECURE_SETTINGS`)
+
+Once the [required ADB command](#️-required-adb-command) has been run, a **System heads-up pop-ups** switch appears in the **Features** card. It turns the system pop-up banner off or on for every app.
+
+### 3. The nuclear option: turn off all pop-up notifications globally with ADB
+
+This works without granting DroidIsland anything. With the phone connected and `adb` available, run:
+
+    adb shell settings put global heads_up_notifications_enabled 0
+
+To get pop-ups back:
+
+    adb shell settings put global heads_up_notifications_enabled 1
+
+Notes:
+
+- This affects every app on the phone, not only DroidIsland.
+- Notifications still arrive in the shade and on the island. Only the system pop-up banner is suppressed.
+- Some phone makers ignore this setting, in the same way some ignore `icon_blacklist`.
