@@ -21,7 +21,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Navigation: the maneuver arrow and the distance to the next turn while Google Maps is navigating
 - **Expanded island** with multiple pages:
   - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
-  - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap it to jump back to Maps
+  - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap the page to jump back to Maps. **Details** switches to a fuller view (trip info split into lines, any extra lines Maps sent, and the last few steps), **Hide** stops showing directions until the next navigation starts, and **Exit** appears when Maps offers its own exit action
   - **Media**: album art, title, artist, and play/pause/skip controls
   - **Timer**: stopwatch with start/pause/reset
   - **Quick tools**: flashlight, internet panel, Bluetooth settings, DroidIsland settings
@@ -48,7 +48,8 @@ The settings app is organised in cards:
   - **Glass** (see-through island) with an adjustable transparency, plus **Text size** and **Corner roundness**
 - **Island items**: individual on/off switches for clock, battery, date, notification icons, network speed, Wi-Fi, mobile data, Bluetooth, airplane mode, Do Not Disturb, silent/vibrate, next alarm, location, VPN and battery saver. **Clock format** (system, 12-hour, 24-hour) and **Date format** (`Mon 26 Oct`, `26 Oct`, `10/26`) are here too.
 - **Features**:
-  - **Media controls**, **Stopwatch timer**, **Navigation (Google Maps)** and **Quick tools page**: turn each page on or off. Navigation also controls the arrow and distance in the pill. It reads the Google Maps navigation notification, so it needs Notification access and works only while Maps is actively navigating. Because Maps decides what its notification contains, the wording and arrow can vary by Maps version
+  - **Media controls**, **Stopwatch timer** and **Quick tools page**: turn each page on or off
+  - **Navigation page**, **Navigation in the island** (arrow and distance in the collapsed pill) and **Keep navigation page open**: three separate switches. Keeping the page open opens it when navigation starts and holds it open, even after other pop-ups, until navigation ends or you tap Hide. Navigation reads the Google Maps notification, so it needs Notification access and works only while Maps is navigating. Maps shares only the next maneuver and trip info, not the full route list, and the wording can vary by Maps version
   - **Notification pop-ups**: expand the island when a notification arrives, with **Pop-up time** and **Auto-close time** sliders
   - **Respect Do Not Disturb**: no pop-ups while Do Not Disturb is on
   - **Hide notification text**: pop-ups show only the app name
