@@ -19,12 +19,14 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Live network down-speed
   - Notification icons for pending notifications
   - Navigation: the maneuver arrow and the distance to the next turn while Google Maps is navigating
+  - Live activity: the icon of your most recent live activity with its timer, percent or title (hidden while navigation is showing)
 - **Expanded island** with multiple pages:
   - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
   - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap the page to jump back to Maps. **Details** switches to a fuller view (trip info split into lines, any extra lines Maps sent, and the last few steps), **Hide** stops showing directions until the next navigation starts, and **Exit** appears when Maps offers its own exit action
   - **Media**: album art, title, artist, and play/pause/skip controls
   - **Timer**: stopwatch with start/pause/reset
   - **Quick tools**: flashlight, internet panel, Bluetooth settings, DroidIsland settings
+  - **Live activities**: ongoing notifications from apps you pick (Clock timers, calls, downloads, rides, workouts and similar), each with its icon, title, text, a timer or progress bar when the app provides one. Tap a row to open that app
   - **Battery**: percentage, charging state
 - **Gestures**
   - Tap the pill, or swipe down on it, to expand
@@ -50,6 +52,7 @@ The settings app is organised in cards:
 - **Features**:
   - **Media controls**, **Stopwatch timer** and **Quick tools page**: turn each page on or off
   - **Navigation page**, **Navigation in the island** (arrow and distance in the collapsed pill) and **Keep navigation page open**: three separate switches. Keeping the page open opens it when navigation starts and holds it open, even after other pop-ups, until navigation ends or you tap Hide. Navigation reads the Google Maps notification, so it needs Notification access and works only while Maps is navigating. Maps shares only the next maneuver and trip info, not the full route list, and the wording can vary by Maps version
+  - **Live activities page**, **Live activity in the island** and **Choose live activity apps**: shows the ongoing notifications of the apps you choose, using only what each app puts in its notification. Nothing is shown until you pick at least one app. Apps that draw a custom notification layout may show less than they do in the shade
   - **Notification pop-ups**: expand the island when a notification arrives, with **Pop-up time** and **Auto-close time** sliders
   - **Respect Do Not Disturb**: no pop-ups while Do Not Disturb is on
   - **Hide notification text**: pop-ups show only the app name
