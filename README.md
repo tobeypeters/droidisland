@@ -5,6 +5,8 @@ A dynamic-island style status bar for Android, drawn as an overlay above the sys
 Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity, single foreground Service, one optional AccessibilityService for trusted window overlays.
 
 ---
+- **Screenshots**
+<br><img src="docs/ui1.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui2.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui3.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui4.png" alt="UI" width="15%" height="15%" />
 
 ## Features
 
@@ -215,9 +217,6 @@ Then launch **DroidIsland** on the phone and continue with the setup screen. Don
 | `INSTALL_FAILED_UPDATE_INCOMPATIBLE` | The installed copy was signed with a different key. Uninstall it first, then install again. |
 
 ---
-
-- **Screenshots**
-<br><img src="docs/ui1.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui2.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui3.png" alt="UI" width="15%" height="15%" />&nbsp; &nbsp;&nbsp;&nbsp;<img src="docs/ui4.png" alt="UI" width="15%" height="15%" />
 
 ## ⚠️ Required ADB command
 
