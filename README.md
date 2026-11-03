@@ -20,7 +20,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Notification icons for pending notifications
   - Navigation: the maneuver arrow and the distance to the next turn while Google Maps is navigating
   - Weather: an icon for the current conditions and the temperature (°F or °C)
-  - Live activity: the icon of your most recent live activity with its timer, percent or title (hidden while navigation is showing)
+  - Live activity: just the icon of your most recent live activity, to show something is running (hidden while navigation is showing). Open the popup to see the details
 - **Expanded island** with multiple pages:
   - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
   - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap the page to jump back to Maps. **Details** switches to a fuller view (trip info split into lines, any extra lines Maps sent, and the last few steps), **Hide** stops showing directions until the next navigation starts, and **Exit** appears when Maps offers its own exit action
