@@ -23,7 +23,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Navigation: the maneuver arrow and the distance to the next turn while Google Maps is navigating
   - Weather: an icon for the current conditions and the temperature (°F or °C)
   - Live activity: just the icon of your most recent live activity, to show something is running (hidden while navigation is showing). Open the popup to see the details
-- **Expanded island** with multiple pages:
+- **Expanded island** with multiple pages. The status bar stays at the top of every popup, stretched to the popup's full width, and its icons and text stay exactly where the position settings put them (alignment, offsets, padding):
   - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
   - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap the page to jump back to Maps. **Details** switches to a fuller view (trip info split into lines, any extra lines Maps sent, and the last few steps), **Hide** stops showing directions until the next navigation starts, and **Exit** appears when Maps offers its own exit action
   - **Media**: album art, title, artist, and play/pause/skip controls
@@ -76,6 +76,7 @@ The settings app is organised in cards:
   - **Copy command** (the ADB grant command) and **Restore system icons now**
   - **Cover the status bar**: an optional full-width bar drawn behind the pill to hide HUD chips (screen recording, USB connection, drag targets) from the top strip. The pull-down still works. The raised-button bevel around the pill is drawn only when the cover is off.
   - **Cover color**: **Island color** makes the cover match the island. **Wallpaper** uses the average color of the wallpaper strip the cover sits on. This is an approximation: it assumes a center-cropped portrait wallpaper and ignores launcher scrolling and custom crops. If the wallpaper image can't be read (live wallpapers, or no read access on some Android versions), it falls back to the wallpaper's primary color.
+  - **Pixel cat**: a pixel-art cat lives on the cover bar. It mostly sits up and stares, blinks, and now and then strolls to a new spot. Tap the bar and it trots over to you. Left alone for a while (you choose how long) it lies down and sleeps until you tap again. It stays on one side of the camera cutout and is only animated while it moves, so it costs very little. Pick its color (orange, gray, black, white). Tapping the bar needs the cover to be touchable, which blocks the real pull-down, so a swipe down on the bar opens the notification shade instead (this needs the DroidIsland accessibility service). Without the accessibility service the bar stays untouchable and the cat just wanders by itself
 - **Hide in apps**: hide the island while chosen apps are in front, for example games or video players. Needs Usage access.
 - **Backup & reset**: **Copy settings** to the clipboard as JSON, **Paste settings** to restore them, and **Reset all settings**.
 - **Gestures**: a cheat sheet of the gestures above.
@@ -95,7 +96,9 @@ The settings app is organised in cards:
 | **Phone state** (`READ_PHONE_STATE`) | Required to read `dataNetworkType` for the `5G`/`LTE`/`3G`/`2G` label |
 | **Fine location** (`ACCESS_FINE_LOCATION`) | Required on Android 10+ for `WifiManager.connectionInfo.rssi` to be non-redacted |
 | **`WRITE_SECURE_SETTINGS`** | Optional. Needed only for the "Hide system icons" feature (`icon_blacklist`) and the in-app global heads-up switch (`heads_up_notifications_enabled`). Must be granted via ADB |
-| **Usage access** | Optional. Needed only for the "Hide in apps" and "Transparent over apps" features (they need to know which app is in front) |
+| **Usage access** | Optional. Needed only for the "Hide in apps" and "Transparent over apps" features, and for choosing which apps show the audio spectrum (they need to know which app is in front) |
+| **`INTERNET`** | Optional. Needed only for Weather (Open-Meteo, free, no account). Declare it in the manifest. There is no button for it |
+| **`RECORD_AUDIO`** and **`MODIFY_AUDIO_SETTINGS`** | Optional. Needed only for the real audio spectrum. Declare both in the manifest, then grant `RECORD_AUDIO` with the **Allow audio access** button or `adb shell pm grant com.example.island android.permission.RECORD_AUDIO`. Without them nothing is shown unless you turn on the decorative fallback animation |
 
 **Automatic text color over apps** reads the screen behind the island using the accessibility service's screenshot ability, which needs Android 11 or newer. If you build from source, make sure the accessibility service config in `res/xml` has `android:canTakeScreenshot="true"`, then turn the service off and on again in Accessibility settings. Until a measurement works, the text color follows the system light/dark theme and the outline is used for contrast.
 
