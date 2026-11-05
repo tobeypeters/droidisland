@@ -79,6 +79,7 @@ The settings app is organised in cards:
   - **Pixel cat**: a pixel-art cat lives on the cover bar. It mostly sits up and stares, blinks, and now and then strolls to a new spot. Tap the bar and it trots over to you.
     - **Colors:** orange, gray, black, white or tuxedo (black with a white muzzle, chest and paws).
     - **Sleeping:** left alone for a while (you choose how long) it lies down and sleeps until you tap again. **Cat sleeps** picks where: where it is, or it walks to the left or right corner of the bar first.
+    - **Idle tricks:** besides walking and sitting it sometimes does a play-bow stretch (head and front paws down, back end up), a yawn, looks left and right, or lies down for a while awake. Some longer walks stop part-way for a stretch, then carry on.
     - **Music:** while the audio spectrum is showing, the cat puts on headphones, closes its eyes and nods along, and stays awake.
     - **Peek-a-boo:** now and then, not every time, if the cat is sitting behind the island it creeps out to the edge and peeks its head out for a moment (**Cat peeks out** turns this off).
     - **Cost and limits:** it stays on one side of the camera cutout and is only animated while it moves, so it costs very little. Tapping the bar needs the cover to be touchable, which blocks the real pull-down, so a swipe down on the bar opens the notification shade instead (this needs the DroidIsland accessibility service). Without the accessibility service the bar stays untouchable and the cat just wanders by itself
