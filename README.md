@@ -24,7 +24,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Weather: an icon for the current conditions and the temperature (°F or °C)
   - Live activity: just the icon of your most recent live activity, to show something is running (hidden while navigation is showing). Open the popup to see the details
 - **Expanded island** with multiple pages. The status bar stays at the top of every popup, stretched to the popup's full width, and its icons and text stay exactly where the position settings put them (alignment, offsets, padding):
-  - **Notifications**: app name, title, body, plus **Mute** and **Dismiss** buttons
+  - **Notifications**: everything waiting in the shade, newest first, each with the app's icon, the sender's photo or artwork when there is one, the time ("5 min. ago"), the title, the message, and earlier chat or inbox lines. Use the arrows to flip through them ("2/5"). **Dismiss** clears it from the Android shade too, **Clear all** clears everything clearable, **Mute** stops that app. The list always matches the shade: if a notification is cleared anywhere else, it disappears here, and opening one from the island clears it just as tapping it in the shade would. Silent notifications are listed but do not pop the island open, and an app updating the same notification does not pop it again unless the text changed
   - **Navigation**: while Google Maps is navigating, a big maneuver arrow, the distance to the next turn, the instruction and the trip/ETA line. Tap the page to jump back to Maps. **Details** switches to a fuller view (trip info split into lines, any extra lines Maps sent, and the last few steps), **Hide** stops showing directions until the next navigation starts, and **Exit** appears when Maps offers its own exit action
   - **Media**: album art, title, artist, and play/pause/skip controls
   - **Timer**: stopwatch with start/pause/reset
@@ -34,7 +34,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - **Live activities**: ongoing notifications from apps you pick (Clock timers, calls, downloads, rides, workouts and similar), each with its icon, title, text, a timer or progress bar when the app provides one. Tap a row to open that app
   - **Battery**: percentage, charging state
 - **Gestures**
-  - Tap the pill, or swipe down on it, to expand
+  - Tap the pill, or swipe down on it, to expand. It opens on the notifications if any are waiting, and otherwise on the quick tools (internet, Bluetooth, settings)
   - Swipe left/right to change page
   - Swipe up to collapse or dismiss a notification
   - Tap a notification to open its app
@@ -72,7 +72,7 @@ The settings app is organised in cards:
   - **System heads-up pop-ups**: a global on/off switch for the system banner, shown only once `WRITE_SECURE_SETTINGS` is granted. If you turn them off, they are only off while the island is running and visible. They come back when the island stops, is hidden, or after a reboot where it doesn't start, and go off again when the island restarts.
   - **Send test notification**
 - **Hide system icons**:
-  - **Hide system icons** via `icon_blacklist`, so the real status bar's icons don't duplicate the island's, with **Also hide system clock** and **Also hide system battery**
+  - **Hide system icons** via `icon_blacklist`, so the real status bar's icons don't duplicate the island's. Every icon slot Android has a name for is hidden, so the system bar is left with only what Android refuses to let apps hide (the notification icons and the camera and microphone privacy dot), with **Also hide system clock** and **Also hide system battery**
   - **Copy command** (the ADB grant command) and **Restore system icons now**
   - **Cover the status bar**: an optional full-width bar drawn behind the pill to hide HUD chips (screen recording, USB connection, drag targets) from the top strip. The pull-down still works. The raised-button bevel around the pill is drawn only when the cover is off.
   - **Island with the cover on**: the island keeps its solid background, so the cat can hide behind it and the text on top stays easy to read, but its ends are square instead of rounded (the cover is the bar behind it) and it shrinks to just the width of its icons and text. Only the sides change, the height does not. Its contents stay exactly where your position settings put them, and the freed space on each side is room for the cat. While an app is in front with **Transparent over apps** on, the cover is lifted and the island goes back to its normal rounded, padded shape
