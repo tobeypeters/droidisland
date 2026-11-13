@@ -19,12 +19,12 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - Mobile network type (`5G`, `LTE`, `3G`, `2G`, or `Cell`) when on cellular
   - Status icons: airplane mode, Do Not Disturb, silent, vibrate, alarm, location, VPN, Bluetooth, battery saver
   - Live network down-speed
-  - Notification icons for pending notifications (drawn at twice the normal icon size, as tall as the bar allows)
+  - Notification icons for pending notifications
   - Navigation: the maneuver arrow and the distance to the next turn while Google Maps is navigating
   - Weather: an icon for the current conditions and the temperature (°F or °C)
   - Live activity: just the icon of your most recent live activity, to show something is running (hidden while navigation is showing). Open the popup to see the details
 - **Expanded island** with multiple pages. The status bar stays at the top of every popup, stretched to the popup's full width, and its icons and text stay exactly where the position settings put them (alignment, offsets, padding):
-  - **Notifications**: a replacement for the Android shade. Everything waiting is listed newest first, flipped through with the arrows ("2/5"). Each one shows the app's icon, the sender's photo or artwork, the time ("5 min. ago"), the title, the full message and earlier chat or inbox lines, and a **big picture** when the notification has one (photos, screenshots).
+  - **Notifications**: a replacement for the Android shade. Everything waiting is listed newest first, flipped through with the arrows ("2/5"). Each one shows large icons (the app's, and the sender's photo or artwork), the time ("5 min. ago"), the title, the full message and earlier chat or inbox lines, and a **big picture** when the notification has one (photos, screenshots).
     - **The app's own buttons** (Reply, Mark as read, Archive, Delete and so on) are shown and work. **Reply** opens a small box to type in over whatever you were doing, and the answer goes back to the app just as it does from the shade.
     - **Also**: **Snooze** (the clock button, for an hour), the app's **notification settings** (the gear), **Mute** (stop that app), **Dismiss**, and **Clear** for everything clearable.
     - **Always in step with the shade**: if a notification is cleared anywhere else it disappears here, **Dismiss** clears it from the shade too, and opening one from the island clears it just as tapping it in the shade would. Silent notifications are listed but do not pop the island open, and an app updating the same notification does not pop it again unless the text changed. **Hide notification text** also hides the picture and buttons
@@ -37,7 +37,7 @@ Built with Kotlin, no Jetpack Compose, no external UI libraries. Single Activity
   - **Live activities**: ongoing notifications from apps you pick (Clock timers, calls, downloads, rides, workouts and similar), each with its icon, title, text, a timer or progress bar when the app provides one. Tap a row to open that app
   - **Battery**: percentage, charging state
 - **Gestures**
-  - Tap the pill, or swipe down on it, to expand. It opens on the notifications if any are waiting, and otherwise on the quick tools (internet, Bluetooth, settings)
+  - Tap the pill, or swipe down on it, to expand. It opens on navigation while Google Maps navigation is active, otherwise on the notifications if any are waiting, and otherwise on the quick tools (internet, Bluetooth, settings). A new notification still pops up by itself
   - Swipe left/right to change page
   - Swipe up to collapse or dismiss a notification
   - Tap a notification to open its app
